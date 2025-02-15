@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 # Credentials 
+notebooks/0_data_collection/credentials.json
 
 # C extensions
 *.so
