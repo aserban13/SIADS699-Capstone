@@ -63,7 +63,7 @@ def create_submission_df(reddit, subredit_topic="FirstTimeHomeBuyer", n_posts=5,
         'username': [],
         'created_at': [],
         # Added 
-        'comment_dict': []
+        # 'comment_dict': []
     }
     for submission in submissions:
         data['submission_id'].append(submission.id)
@@ -77,16 +77,16 @@ def create_submission_df(reddit, subredit_topic="FirstTimeHomeBuyer", n_posts=5,
         data['created_at'].append(submission.created_utc)
 
         # added to get a dict of comments saved as a column
-        comment_dict = {}
-        for i, comment in enumerate(submission.comments):
+        # comment_dict = {}
+        # for i, comment in enumerate(submission.comments):
         
-            try:
-                comment_i = comment.body
-                comment_dict[i] = comment_i
-            except:
-                pass
+        #     try:
+        #         comment_i = comment.body
+        #         comment_dict[i] = comment_i
+        #     except:
+        #         pass
 
-        data['comment_dict'].append(comment_dict)
+        # data['comment_dict'].append(comment_dict)
 
     # Create the dataframe from our dictionary
     submission_df = pd.DataFrame(data)
@@ -187,11 +187,26 @@ def posts_to_comments(data):
     return comments_combined
 
 
-def authenticate_google_drive(): 
+def authenticate_google_drive(credentials_path="client_secrets.json"): 
 
     # Authenticate with Google
     gauth = GoogleAuth()
-    gauth.LocalWebserverAuth()  # Opens a browser for authentication
+    gauth.LoadClientConfigFile(credentials_path)
+
+    # gauth.LocalWebserverAuth()  # Opens a browser for authentication
+    
+    # Try to authenticate using a saved token file
+    gauth.LoadCredentialsFile("google_drive_authentication_cookie.txt")
+
+    if gauth.credentials is None:  
+        gauth.LocalWebserverAuth()  # Fall back to manual login (if necessary)
+    elif gauth.access_token_expired:  
+        gauth.Refresh()  # Refresh the token
+    else:  
+        gauth.Authorize()  # Authenticate silently
+
+    # Save the credentials for future use (so no browser is needed next time)
+    gauth.SaveCredentialsFile("google_drive_authentication_cookie.txt")
 
     # Create GoogleDrive instance
     drive = GoogleDrive(gauth)
@@ -202,10 +217,24 @@ def save_google_drive_data(drive, credential_file="google_drive_credentials.json
     with open("google_drive_credentials.json", 'r') as file:
         google_drive_credentials = json.load(file)
     folder_id = google_drive_credentials["folder_id"]
+    
+    file_list = drive.ListFile({'q': f"'{folder_id}' in parents and trashed=false"}).GetList()
+    existing_file_id = None
+
+    for file in file_list:
+        if file['title'] == filename:
+            existing_file_id = file['id']
+            break
 
     csv_buffer = io.StringIO()
     dataframe.to_csv(csv_buffer, index=False)
     csv_buffer.seek(0)
+
+    # If file exists, delete it first
+    if existing_file_id:
+        file_to_delete = drive.CreateFile({'id': existing_file_id})
+        file_to_delete.Delete()
+        print(f"Existing file '{filename}' deleted.")
 
     file = drive.CreateFile({'title': filename, 'parents': [{'id': folder_id}]})
     file.SetContentString(csv_buffer.getvalue())  # Set content from memory buffer
