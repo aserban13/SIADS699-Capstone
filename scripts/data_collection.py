@@ -1,6 +1,9 @@
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
 import pandas as pd 
 import praw
 import json 
+import io
 
 # Grab these credentials from: https://www.reddit.com/prefs/apps
 # Function to load credentials from a JSON file
@@ -90,11 +93,11 @@ def create_submission_df(reddit, subredit_topic="FirstTimeHomeBuyer", n_posts=5,
     submission_df['created_at'] = pd.to_datetime(submission_df['created_at'], unit='s') 
     
     # Remove \n\n using str.replace()
-    submission_df['text'] = submission_df['text'].str.replace(r'\n\n', '', regex=True)
+    # submission_df['text'] = submission_df['text'].str.replace(r'\n\n', '', regex=True)
 
     # Remove part of the text that gets edited if include_edit == True
-    if include_edit == True:
-        submission_df['text'] = submission_df['text'].str.replace(r'(?i)edit: .*', '', regex=True)
+    # if include_edit == True:
+    #     submission_df['text'] = submission_df['text'].str.replace(r'(?i)edit: .*', '', regex=True)
 
     # Specify search term at end of dataset creation
     submission_df['search_query'] = search_query
@@ -182,3 +185,60 @@ def posts_to_comments(data):
                                         'poster_username', 'subredit_topic', 'search_query', 'title']]
 
     return comments_combined
+
+
+def authenticate_google_drive(): 
+
+    # Authenticate with Google
+    gauth = GoogleAuth()
+    gauth.LocalWebserverAuth()  # Opens a browser for authentication
+
+    # Create GoogleDrive instance
+    drive = GoogleDrive(gauth)
+    return drive 
+
+def save_google_drive_data(drive, credential_file="google_drive_credentials.json", dataframe=pd.DataFrame(), filename="reddit_data_test.csv"): 
+    # Grab the Folder Id of the google drive where the data will be saved
+    with open("google_drive_credentials.json", 'r') as file:
+        google_drive_credentials = json.load(file)
+    folder_id = google_drive_credentials["folder_id"]
+
+    csv_buffer = io.StringIO()
+    dataframe.to_csv(csv_buffer, index=False)
+    csv_buffer.seek(0)
+
+    file = drive.CreateFile({'title': filename, 'parents': [{'id': folder_id}]})
+    file.SetContentString(csv_buffer.getvalue())  # Set content from memory buffer
+    file.Upload()
+    print(f"File '{filename}' uploaded successfully to folder {folder_id}!")
+
+
+def grab_google_drive_folder_data(drive, credential_file = "google_drive_credentials.json", filename="reddit_data.csv"): 
+    # Grab the Folder Id of the google drive where the data will be saved
+    with open(credential_file, 'r') as file:
+        google_drive_credentials = json.load(file)
+    folder_id = google_drive_credentials["folder_id"]
+
+    # Search for the file in the folder
+    file_list = drive.ListFile({'q': f"'{folder_id}' in parents and trashed=false"}).GetList()
+
+    # Find the specific file by name
+    file_id = None
+    for file in file_list:
+        if file['title'] == filename:
+            file_id = file['id']
+            break
+
+    if file_id:
+        # Download file content into memory
+        file = drive.CreateFile({'id': file_id})
+        file_content = io.StringIO(file.GetContentString())
+
+        # Load into a Pandas DataFrame
+        df = pd.read_csv(file_content)
+
+        print(f"Successfully loaded '{filename}' into a DataFrame!")
+        # print(df.head())  # Print first few rows
+        return df
+    else:
+        print(f"File '{filename}' not found in folder {folder_id}.")
