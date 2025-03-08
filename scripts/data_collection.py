@@ -184,7 +184,7 @@ def posts_to_comments(data):
     return comments_combined
 
 
-def authenticate_google_drive(credentials_path="credentials/client_secrets.json"): 
+def authenticate_google_drive(credentials_path="credentials/google_drive_client_secret.json"): 
 
     # Authenticate with Google
     gauth = GoogleAuth()
@@ -209,7 +209,7 @@ def authenticate_google_drive(credentials_path="credentials/client_secrets.json"
     drive = GoogleDrive(gauth)
     return drive 
 
-def save_google_drive_data(drive, credential_file="credentials/google_drive_credentials.json", dataframe=pd.DataFrame(), filename="reddit_data_test.csv"): 
+def save_google_drive_data(drive, credential_file="credentials/google_drive_folder_id.json", dataframe=pd.DataFrame(), filename="reddit_data_test.csv"): 
     # Grab the Folder Id of the google drive where the data will be saved
     with open(credential_file, 'r') as file:
         google_drive_credentials = json.load(file)
@@ -239,7 +239,7 @@ def save_google_drive_data(drive, credential_file="credentials/google_drive_cred
     print(f"File '{filename}' uploaded successfully to folder {folder_id}!")
 
 
-def grab_google_drive_folder_data(drive, credential_file = "credentials/google_drive_credentials.json", filename="reddit_data.csv"): 
+def grab_google_drive_folder_data(drive, credential_file = "credentials/google_drive_folder_id.json", filename="reddit_data.csv"): 
     # Grab the Folder Id of the google drive where the data will be saved
     with open(credential_file, 'r') as file:
         google_drive_credentials = json.load(file)
