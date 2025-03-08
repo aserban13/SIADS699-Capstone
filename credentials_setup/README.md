@@ -9,5 +9,5 @@ To run the notebooks smoothly, do the following:
 
 ## File Structure 
 
-[0_reddit_api_instructions.md](0_reddit_api_instructions.md): instructions on how to get access reddit through the PRAW API 
-[1_google_drive_api_instructions.md](1_google_drive_api_instructions.md): instruction on how to get access to the google drive location. This is where the data will be saved.
+- [0_reddit_api_instructions.md](0_reddit_api_instructions.md): instructions on how to get access reddit through the PRAW API 
+- [1_google_drive_api_instructions.md](1_google_drive_api_instructions.md): instruction on how to get access to the google drive location. This is where the data will be saved.
