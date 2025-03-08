@@ -4,9 +4,7 @@ __pycache__/
 *$py.class
 
 # Credentials 
-notebooks/0_data_collection/credentials.json
-notebooks/0_data_collection/client_secrets.json
-notebooks/0_data_collection/google_drive_credentials.json
+notebooks/0_data_collection/credentials/*
 notebooks/0_data_collection/google_drive_authentication_cookie.txt
 notebooks/google_drive_authentication_cookie.txt
 secrets/credentials.json

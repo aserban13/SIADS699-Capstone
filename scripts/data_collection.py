@@ -47,7 +47,6 @@ def create_submission_df(reddit, subredit_topic="FirstTimeHomeBuyer", n_posts=5,
     
     returns Pandas DataFrame with the text of 
     """
-    
     subreddit = reddit.subreddit(subredit_topic)
     submissions = subreddit.search(search_query, limit=n_posts)
 
@@ -106,7 +105,7 @@ def create_submission_df(reddit, subredit_topic="FirstTimeHomeBuyer", n_posts=5,
 
 
 # Code to hit mulitple subreddit and companies
-def combine_subreddits(reddit, n_posts, sub_reddits, search_terms):
+def combine_subreddits(reddit, n_posts, brand_subreddits_dict):
 
     """
     This function combines data from multiple sub-reddits and search terms to create one large dataframe for analysis. 
@@ -122,15 +121,13 @@ def combine_subreddits(reddit, n_posts, sub_reddits, search_terms):
     
 
     dfs = []
-    for company in search_terms:
-    
-        for sr in sub_reddits:
-        
+    for company, sub_reddits in brand_subreddits_dict.items():
+        for sr in sub_reddits: 
             sr_data = create_submission_df(reddit, subredit_topic = sr, n_posts = n_posts, search_query = company)
+            size_df = sr_data.shape[0]
             sr_data = dfs.append(sr_data)
+            print(f"Done pulling {sr} subreddit for search term {company}! Size: {size_df}")
         
-            print(f"Done pulling {sr} subreddit for search term {company}!")
-    
     # Union all dataframes together
     df_final = pd.concat(dfs)
     print('====DONE!====')
@@ -187,7 +184,7 @@ def posts_to_comments(data):
     return comments_combined
 
 
-def authenticate_google_drive(credentials_path="client_secrets.json"): 
+def authenticate_google_drive(credentials_path="credentials/google_drive_client_secret.json"): 
 
     # Authenticate with Google
     gauth = GoogleAuth()
@@ -212,9 +209,9 @@ def authenticate_google_drive(credentials_path="client_secrets.json"):
     drive = GoogleDrive(gauth)
     return drive 
 
-def save_google_drive_data(drive, credential_file="google_drive_credentials.json", dataframe=pd.DataFrame(), filename="reddit_data_test.csv"): 
+def save_google_drive_data(drive, credential_file="credentials/google_drive_folder_id.json", dataframe=pd.DataFrame(), filename="reddit_data_test.csv"): 
     # Grab the Folder Id of the google drive where the data will be saved
-    with open("google_drive_credentials.json", 'r') as file:
+    with open(credential_file, 'r') as file:
         google_drive_credentials = json.load(file)
     folder_id = google_drive_credentials["folder_id"]
     
@@ -242,7 +239,7 @@ def save_google_drive_data(drive, credential_file="google_drive_credentials.json
     print(f"File '{filename}' uploaded successfully to folder {folder_id}!")
 
 
-def grab_google_drive_folder_data(drive, credential_file = "google_drive_credentials.json", filename="reddit_data.csv"): 
+def grab_google_drive_folder_data(drive, credential_file = "credentials/google_drive_folder_id.json", filename="reddit_data.csv"): 
     # Grab the Folder Id of the google drive where the data will be saved
     with open(credential_file, 'r') as file:
         google_drive_credentials = json.load(file)
