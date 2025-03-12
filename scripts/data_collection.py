@@ -215,23 +215,24 @@ def save_google_drive_data(drive, credential_file="credentials/google_drive_fold
         google_drive_credentials = json.load(file)
     folder_id = google_drive_credentials["folder_id"]
     
-    file_list = drive.ListFile({'q': f"'{folder_id}' in parents and trashed=false"}).GetList()
-    existing_file_id = None
+    # file_list = drive.ListFile({'q': f"'{folder_id}' in parents and trashed=false"}).GetList()
+    # existing_file_id = None
 
-    for file in file_list:
-        if file['title'] == filename:
-            existing_file_id = file['id']
-            break
+    # for file in file_list:
+    #     if file['title'] == filename:
+    #         existing_file_id = file['id']
+    #         break
 
     csv_buffer = io.StringIO()
     dataframe.to_csv(csv_buffer, index=False)
     csv_buffer.seek(0)
 
     # If file exists, delete it first
-    if existing_file_id:
-        file_to_delete = drive.CreateFile({'id': existing_file_id})
-        file_to_delete.Delete()
-        print(f"Existing file '{filename}' deleted.")
+    # if existing_file_id:
+    #     print(existing_file_id)
+    #     file_to_delete = drive.CreateFile({'id': existing_file_id})
+    #     file_to_delete.Delete()
+    #     print(f"Existing file '{filename}' deleted.")
 
     file = drive.CreateFile({'title': filename, 'parents': [{'id': folder_id}]})
     file.SetContentString(csv_buffer.getvalue())  # Set content from memory buffer
