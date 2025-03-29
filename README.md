@@ -15,3 +15,8 @@
 4) Identify other intersts of top posters
 
 Documentation for Reedit API: https://praw.readthedocs.io/en/stable/getting_started/quick_start.html
+
+## Folder Structure 
+
+0_data_collection/: Contains notebooks that contain processing into collecting the base dataset
+1_proceess_data/: Contains notebooks that contain some data processing,
