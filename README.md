@@ -1,18 +1,26 @@
 # MADS Capstone Project: Reddit Sentiment Analysis
 
-### Authors: 
-##### Andreea Serban and Chris McAllister
+### Authors:
+**Andreea Serban** and **Chris McAllister**
 
-This repository contains the codebase for our University of Michigan School of Information Capstone project. The goal of this project is to analyze Reddit data to understand brand sentiment across multiple companies by leveraging some data science methods. 
+This repository contains the code for our Capstone project in the University of Michigan School of Information’s MADS program. Our goal is to analyze Reddit data to understand brand sentiment across multiple companies using a variety of data science methods.
+
+---
 
 ## Project Overview
 
-We built a notebook pipeline to:
+We developed a notebook-based pipeline to:
+
 - Collect and preprocess Reddit posts
-- Manually label posts
-- Tested methods: Semantic Text Embeddings (STS) , created XGBoost models , Chat GPT AI 
-- Evaluation 
-- Analysis
+- Manually label a subset of posts for supervised learning
+- Experiment with multiple methods:
+  - Semantic Textual Similarity (STS) using embeddings
+  - XGBoost classification models
+  - OpenAI’s ChatGPT for post classification
+- Evaluate model performance
+- Analyze insights across brands
+
+---
 
 ## Repository Structure
 
@@ -26,24 +34,31 @@ SIADS699-Capstone/
 ├── requirements.txt        # Python dependencies
 ```
 
+---
+
+##  Data Access
+
+This project uses publicly available data collected from Reddit via the [PRAW API](https://praw.readthedocs.io/). All data access adheres to Reddit's [API Terms of Service](https://www.redditinc.com/policies/data-api-terms) and [User Agreement](https://www.redditinc.com/policies/user-agreement).
+
+- **Data Ownership**: Reddit content is created by users and owned by Reddit Inc.
+- **Redistribution**: We do not redistribute any raw Reddit data in this repository. To access the data, you must obtain your own API credentials and follow the instructions in [`credentials_setup/0_reddit_api_instructions.md`](credentials_setup/0_reddit_api_instructions.md).
+- **Licensing**: This project does not claim ownership over Reddit data. Use of the data is governed by Reddit’s policies and the rights of individual users.
+
+For academic or reproducibility purposes, we may be able to share derived metadata or aggregate outputs (e.g., sentiment scores or visualizations), in accordance with Reddit’s content usage guidelines.
+
+---
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+---
 
-### Tools Used
+## Tools Used
 
 - **Reddit API (PRAW)** – [PRAW License](https://github.com/praw-dev/praw/blob/main/LICENSE.txt)
 - **Hugging Face Transformers** – [Apache 2.0 License](https://github.com/huggingface/transformers/blob/main/LICENSE)
-- **OpenAI GPT (ChatGPT API)** – Usage governed by [OpenAI Terms of Use](https://openai.com/policies/terms-of-use)
+- **OpenAI GPT (ChatGPT API)** – Governed by [OpenAI Terms of Use](https://openai.com/policies/terms-of-use)
 
-This project uses these tools via their respective APIs and libraries, without redistributing or modifying proprietary models.
+We use these tools via their official APIs and libraries. This project does not redistribute or modify proprietary models or content.
 
-## Data Access
-
-This project uses publicly available data collected from Reddit via the [PRAW API](https://praw.readthedocs.io/). All data access complies with Reddit's [API Terms of Service](https://www.redditinc.com/policies/data-api-terms) and [User Agreement](https://www.redditinc.com/policies/user-agreement).
-
-- **Data Ownership**: Reddit content is owned by the users who create it and hosted by Reddit Inc.
-- **Redistribution**: We do not redistribute raw data in this repository. If you wish to access the data, you must obtain your own API credentials and follow the data collection steps outlined in the [credentials_setup/0_reddit_api_instructions](credentials_setup/0_reddit_api_instructions).md.
-- **Licensing**: This project does not claim any ownership over the Reddit data used. Use of the data is subject to Reddit’s policies and the rights of individual users.
-
-For academic or reproducibility purposes, metadata and processed output summaries (e.g., sentiment scores, visualizations) may be shared upon request, in accordance with Reddit’s content usage policies.
+---
