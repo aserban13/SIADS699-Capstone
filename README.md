@@ -1,4 +1,4 @@
-# MADS Capstone Project: Reddit Sentiment Analysis
+# MADS Capstone Project: Reddit Brand Sentiment Analysis
 
 ### Authors:
 **Andreea Serban** and **Chris McAllister**
