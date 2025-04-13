@@ -7,7 +7,7 @@ This repository contains the code for our Capstone project in the University of 
 
 ---
 
-## Project Overview
+## Setup 
 
 We developed a notebook-based pipeline to:
 
@@ -19,6 +19,26 @@ We developed a notebook-based pipeline to:
   - OpenAI’s ChatGPT for post classification
 - Evaluate model performance
 - Analyze insights across brands
+
+### How to Run the Code
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/aserban13/SIADS699-Capstone.git
+cd SIADS699-Capstone
+```
+
+### 2. Set up APIs
+
+Follow the files in the credentials_setup notebook to set up the: 
+- [Reddit API](0_reddit_api_instructions.md)
+- [Google Drive API](1_google_drive_api_instructions.md)
+- [Chat GPT API](2_chat_gpt_api_instructions.md)
+
+### 3. Run Notebooks and get the results
+
+Run the notebooks within the `notebooks/` folder in order to replicate the results.   
 
 ---
 
