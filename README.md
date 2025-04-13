@@ -1,22 +1,39 @@
-### MADS Capstone Project: Text Analysis of Reddit Data for Mortgage Companies
+# MADS Capstone Project: Reddit Sentiment Analysis
 
-#### Authors: 
-###### Andreea Serban and Chris McAllister
-----
-##### The goal of this notebook is to access the Reddit API to see how people feel about different mortgage companies. The output will two dataframes:
-1) One for all the posts on Reddit
-2) One for all the comments associated with the posts
-3) Lastly, we save it to our data folder.
-----
-##### Once we  have the data, we'll conduct to understand the following questions:
-1) Sentiment Trends Overtime
-2) Comparison of Sentiment to other mortgage companies
-3) Identify Similar Brands based off what Redditors are saying (Coca-Cola, Xfinity, etc).
-4) Identify other intersts of top posters
+### Authors: 
+##### Andreea Serban and Chris McAllister
 
-Documentation for Reedit API: https://praw.readthedocs.io/en/stable/getting_started/quick_start.html
+This repository contains the codebase for our University of Michigan School of Information Capstone project. The goal of this project is to analyze Reddit data to understand brand sentiment across multiple companies by leveraging some data science methods. 
 
-## Folder Structure 
+## Project Overview
 
-0_data_collection/: Contains notebooks that contain processing into collecting the base dataset
-1_proceess_data/: Contains notebooks that contain some data processing,
+We built a notebook pipeline to:
+- Collect and preprocess Reddit posts
+- Manually label posts
+- Tested methods: Semantic Text Embeddings (STS) , created XGBoost models , Chat GPT AI 
+- Evaluation 
+- Analysis
+
+## Repository Structure
+
+```bash
+SIADS699-Capstone/
+│
+├── credentials_setup/      # Processed and raw data (not tracked by git)
+├── notebooks/              # Notebooks used to run the images in report
+├── scripts/                # Python scripts for accessing the data 
+├── images/                 # Images that were created or used 
+├── requirements.txt        # Python dependencies
+```
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+### Tools Used
+
+- **Reddit API (PRAW)** – [PRAW License](https://github.com/praw-dev/praw/blob/main/LICENSE.txt)
+- **Hugging Face Transformers** – [Apache 2.0 License](https://github.com/huggingface/transformers/blob/main/LICENSE)
+- **OpenAI GPT (ChatGPT API)** – Usage governed by [OpenAI Terms of Use](https://openai.com/policies/terms-of-use)
+
+This project uses these tools via their respective APIs and libraries, without redistributing or modifying proprietary models.
