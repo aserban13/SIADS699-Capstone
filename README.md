@@ -32,9 +32,9 @@ cd SIADS699-Capstone
 ### 2. Set up APIs
 
 Follow the files in the credentials_setup notebook to set up the: 
-- [Reddit API](0_reddit_api_instructions.md)
-- [Google Drive API](1_google_drive_api_instructions.md)
-- [Chat GPT API](2_chat_gpt_api_instructions.md)
+- [Reddit API](credentials_setup/0_reddit_api_instructions.md)
+- [Google Drive API](credentials_setup/1_google_drive_api_instructions.md)
+- [Chat GPT API](credentials_setup/2_chat_gpt_api_instructions.md)
 
 ### 3. Run Notebooks and get the results
 
