@@ -47,8 +47,8 @@ Run the notebooks within the `notebooks/` folder in order to replicate the resul
 ```bash
 SIADS699-Capstone/
 │
-├── credentials_setup/      # Processed and raw data (not tracked by git)
-├── notebooks/              # Notebooks used to run the images in report
+├── credentials_setup/      # Instructions on how to set apis set up
+├── notebooks/              # Notebooks used to run analysis
 ├── scripts/                # Python scripts for accessing the data 
 ├── images/                 # Images that were created or used 
 ├── requirements.txt        # Python dependencies
