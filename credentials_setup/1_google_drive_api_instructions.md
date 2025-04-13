@@ -6,7 +6,7 @@ We leverage the google drive API to prevent us from saving data locally, and sav
 
 This will help you get set up so that you can run the notebooks that pull, save, and download the data. 
 
-## 1. Google Drive API Credentials
+## Google Drive API Credentials
 
 1. Go to the Google Cloud Console.
 2. Create a new project (or select an existing one).

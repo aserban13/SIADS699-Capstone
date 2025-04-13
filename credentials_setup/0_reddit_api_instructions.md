@@ -18,5 +18,4 @@ To grab the data from reddit, follow the steps below
 **Final file loocation:** 
 notebooks/credentials/reddit_credentials.json
 
-
 For more informatioon about the reddit PRAW API, these are the documenation for it: https://praw.readthedocs.io/en/stable/getting_started/quick_start.html
